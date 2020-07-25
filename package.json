@@ -4,7 +4,7 @@
   "description": "Repository showing Cypress tests",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run"
+    "test": "cypress"
   },
   "keywords": [
     "cypress",
