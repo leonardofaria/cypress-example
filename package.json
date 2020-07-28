@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "serve public -p 8000",
-    "test": "cypress"
+    "test": "docker run -it -e CYPRESS_updateSnapshots=$CYPRESS_updateSnapshots --ipc=host -v $PWD:/e2e -w /e2e cypress/included:4.11.0"
   },
   "keywords": [
     "cypress",
