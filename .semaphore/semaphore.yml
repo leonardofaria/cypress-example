@@ -1,0 +1,29 @@
+version: v1.0
+name: Cypress example
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Build Dependencies
+    task:
+      jobs:
+        - name: NPM
+          commands:
+            - sem-version node latest
+            - checkout
+            - cache restore node-modules-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules
+            - npm ci
+            - cache store node-modules-$(checksum package-lock.json) node_modules
+  - name: Tests
+    dependencies: ['Build Dependencies']
+    task:
+      prologue:
+        commands:
+          - sem-version node latest
+          - checkout
+          - cache restore node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),node-modules-$SEMAPHORE_GIT_BRANCH,node-modules
+      jobs:
+        - name: Cypress
+          commands:
+            - npm run test:ci
