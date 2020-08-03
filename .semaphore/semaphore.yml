@@ -21,6 +21,8 @@ blocks:
   - name: Tests
     dependencies: ['Build Dependencies']
     task:
+      secrets:
+        - name: Cypress
       prologue:
         commands:
           - sem-version node 12
